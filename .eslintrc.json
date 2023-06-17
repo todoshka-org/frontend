@@ -1,8 +1,17 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "prettier",
+    "plugin:storybook/recommended"
+  ],
   "rules": {
     "arrow-body-style": ["error", "as-needed"],
     "comma-dangle": ["error", "always-multiline"],
-    "max-len": ["error", { "code": 100 }]
+    "max-len": [
+      "error",
+      {
+        "code": 100
+      }
+    ]
   }
 }
