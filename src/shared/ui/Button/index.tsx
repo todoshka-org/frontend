@@ -1,13 +1,15 @@
+'use client';
 import {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
-  FC,
   MouseEventHandler,
   ReactNode,
+  forwardRef,
 } from 'react';
 import styled, { css } from 'styled-components';
 
 interface ButtonProps {
+  ref?: React.Ref<HTMLButtonElement>;
   variant?: 'filled' | 'ghost' | 'filter';
   children?: ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -16,7 +18,7 @@ interface ButtonProps {
   leftAddon?: ReactNode;
   topAddon?: ReactNode;
   rightAddon?: ReactNode;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -42,7 +44,6 @@ const StyledButton = styled.button<ButtonProps>`
     display: flex;
     align-items: center;
     flex-direction: ${topAddon ? 'column' : 'row'};
-
     ${variant === 'filled' &&
     css`
       background-color: ${theme.colors[colorScheme].color};
@@ -110,20 +111,23 @@ StyledButton.defaultProps = {
   size: 'large',
 };
 
-export const Button: FC<
+export const Button = forwardRef<
+  HTMLButtonElement,
   ButtonProps &
     DetailedHTMLProps<
       ButtonHTMLAttributes<HTMLButtonElement>,
       HTMLButtonElement
     >
-> = props => {
+>((props, ref) => {
   const { topAddon, leftAddon, rightAddon, children } = props;
   return (
-    <StyledButton {...props}>
+    <StyledButton ref={ref} {...props}>
       {topAddon && topAddon}
       {leftAddon && leftAddon}
       {children}
       {rightAddon && rightAddon}
     </StyledButton>
   );
-};
+});
+
+Button.displayName = 'Button';
