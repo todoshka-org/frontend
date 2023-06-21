@@ -11,13 +11,12 @@ interface ButtonProps {
   variant?: 'filled' | 'ghost' | 'filter';
   children?: ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  disabled?: boolean;
   colorScheme?: 'primary' | 'secondary';
   size?: 'small' | 'large';
-  shortcut?: string;
   leftAddon?: ReactNode;
   topAddon?: ReactNode;
   rightAddon?: ReactNode;
+  disabled: boolean;
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -26,9 +25,8 @@ const StyledButton = styled.button<ButtonProps>`
     variant = 'filled',
     colorScheme = 'primary',
     size = 'large',
-    disabled,
     topAddon,
-    shortcut,
+    disabled,
   }) => css`
     height: ${topAddon ? '56px' : '32px'};
     padding: 8px;
@@ -39,7 +37,7 @@ const StyledButton = styled.button<ButtonProps>`
     font-size: 13px;
     line-height: 16px;
     border-radius: 8px;
-    cursor: ${disabled ? 'not-allowed' : 'pointer'};
+    cursor: pointer;
     transition: 0.2s all ease;
     display: flex;
     align-items: center;
@@ -47,40 +45,24 @@ const StyledButton = styled.button<ButtonProps>`
 
     ${variant === 'filled' &&
     css`
-      background-color: ${disabled
-        ? theme.colors.disabled.color
-        : theme.colors[colorScheme].color};
-      color: ${disabled
-        ? theme.colors.disabled.text
-        : theme.colors[colorScheme].text};
-      border-bottom: 2px solid
-        ${disabled
-          ? theme.colors.disabled.border
-          : theme.colors[colorScheme].border};
+      background-color: ${theme.colors[colorScheme].color};
+      color: ${theme.colors[colorScheme].text};
+      border-bottom: 2px solid ${theme.colors[colorScheme].border};
 
-      ${shortcut &&
-      css`
-        &::after {
-          content: '${shortcut}';
-          border: 1px solid
-            ${disabled
-              ? theme.colors.disabled.border
-              : theme.colors[colorScheme].border};
-          padding: 0 4px;
-          border-radius: 4px;
-        }
-      `}
+      &:hover {
+        background-color: ${theme.colors[colorScheme].hover};
+      }
 
-      ${!disabled &&
-      css`
-        &:hover {
-          background-color: ${theme.colors[colorScheme].hover};
-        }
+      &:active {
+        background-color: ${theme.colors[colorScheme].active};
+      }
 
-        &:active {
-          background-color: ${theme.colors[colorScheme].active};
-        }
-      `};
+      &:disabled {
+        cursor: not-allowed;
+        background-color: ${theme.colors.disabled.color};
+        color: ${theme.colors.disabled.text};
+        border-bottom: 2px solid ${theme.colors.disabled.border};
+      }
     `}
 
     ${variant === 'ghost' &&
