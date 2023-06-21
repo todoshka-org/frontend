@@ -1,11 +1,6 @@
 'use client';
-import { defaultTheme } from '@shared/lib/theme/defaultTheme';
-import { ThemeProvider } from 'styled-components';
+import { Button } from '@shared/ui/Button';
 
-const Home = () => (
-  <ThemeProvider theme={defaultTheme}>
-    <main>test</main>
-  </ThemeProvider>
-);
+const Home = () => <Button>hello</Button>;
 
 export default Home;

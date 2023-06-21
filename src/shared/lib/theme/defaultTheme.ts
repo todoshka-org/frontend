@@ -16,20 +16,6 @@ export const defaultTheme: DefaultTheme = {
       hover: '#CFD4D9',
       active: '#CACFD4',
     },
-    filter: {
-      color: '#F2F4F8',
-      text: '#121619',
-      border: '#DDE1E6',
-      hover: '#E6EAEE',
-      active: '#E2E6EA',
-    },
-    ghost: {
-      color: 'transparent',
-      text: '#697077',
-      hover: '#F0F2F3',
-      active: '#EBEDEF',
-    },
-    disabled: { color: '#C1C7CD', text: '#697077', border: '#A2A9B0' },
 
     grey: {
       0: '#FFFFFF',

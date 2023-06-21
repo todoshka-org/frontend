@@ -29,3 +29,10 @@ export const Filter: Story = {
   },
 };
 
+export const FilterWithAddon: Story = {
+  args: {
+    children: 'filter',
+    variant: 'filter',
+    topAddon: <h1>hello</h1>,
+  },
+};

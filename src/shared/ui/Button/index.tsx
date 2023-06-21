@@ -19,18 +19,24 @@ interface ButtonProps {
   topAddon?: ReactNode;
   rightAddon?: ReactNode;
   disabled?: boolean;
+  height?: string;
 }
 
+const buttonSizes = {
+  small: {
+    height: '24px',
+    any: '6px',
+  },
+  large: {
+    height: '24px',
+    any: '6px',
+  },
+};
+
 const StyledButton = styled.button<ButtonProps>`
-  ${({
-    theme,
-    variant = 'filled',
-    colorScheme = 'primary',
-    size = 'large',
-    topAddon,
-    disabled,
-  }) => css`
-    height: ${topAddon ? '56px' : '32px'};
+  ${({ theme, variant, colorScheme, size, topAddon, disabled, height }) => css`
+    min-height: ${topAddon ? '56px' : '32px'};
+    height: ${height && height};
     padding: 8px;
     gap: 8px;
     border: none;
@@ -44,72 +50,67 @@ const StyledButton = styled.button<ButtonProps>`
     display: flex;
     align-items: center;
     flex-direction: ${topAddon ? 'column' : 'row'};
-    ${variant === 'filled' &&
+
+    ${(variant === 'filled' || variant === undefined) &&
     css`
-      background-color: ${theme.colors[colorScheme].color};
-      color: ${theme.colors[colorScheme].text};
-      border-bottom: 2px solid ${theme.colors[colorScheme].border};
+      background-color: ${theme.colors[colorScheme ?? 'primary'].color};
+      color: ${theme.colors[colorScheme ?? 'primary'].text};
+      border-bottom: 2px solid ${theme.colors[colorScheme ?? 'primary'].border};
 
       &:hover {
-        background-color: ${theme.colors[colorScheme].hover};
+        background-color: ${theme.colors[colorScheme ?? 'primary'].hover};
       }
 
       &:active {
-        background-color: ${theme.colors[colorScheme].active};
+        background-color: ${theme.colors[colorScheme ?? 'primary'].active};
       }
 
       &:disabled {
         cursor: not-allowed;
-        background-color: ${theme.colors.disabled.color};
-        color: ${theme.colors.disabled.text};
-        border-bottom: 2px solid ${theme.colors.disabled.border};
+        background-color: ${theme.colors.grey[30]};
+        color: ${theme.colors.grey[60]};
+        border-bottom: 2px solid ${theme.colors.grey[40]};
       }
     `}
 
     ${variant === 'ghost' &&
     css`
       background-color: transparent;
-      color: ${theme.colors.ghost.text};
+      color: ${theme.colors.grey[60]};
       border: none;
-      gap: ${size === 'small' && '4px'};
-      padding: ${size === 'small' && '4px'};
-      border-radius: ${size === 'small' && '4px'};
-      height: ${size === 'small' && '24px'};
+      gap: ${size === 'small' && buttonSizes.small.any};
+      padding: ${size === 'small' && buttonSizes.small.any};
+      border-radius: ${size === 'small' && buttonSizes.small.any};
+      min-height: ${size === 'small' && buttonSizes.small.height};
 
       &:hover {
-        background-color: ${theme.colors.ghost.hover};
+        background-color: rgba(193, 199, 205, 0.24);
       }
 
       &:active {
-        background-color: ${theme.colors.ghost.active};
+        background-color: rgba(193, 199, 205, 0.32);
       }
     `}
 
     ${variant === 'filter' &&
     css`
-      background-color: ${theme.colors.filter.color};
-      border-bottom: 2px solid ${theme.colors.filter.border};
-      color: ${theme.colors.filter.text};
+      background-color: ${theme.colors.grey[10]};
+      border-bottom: 2px solid ${theme.colors.grey[20]};
+      color: ${theme.colors.grey[100]};
 
       ${!disabled &&
       css`
         &:hover {
-          background-color: ${theme.colors.filter.hover};
+          background-color: ${theme.colors.grey[20]};
         }
 
         &:active {
-          background-color: ${theme.colors.filter.active};
+          background-color: ${theme.colors.grey[30]};
         }
       `};
     `};
   `}
 `;
-
-StyledButton.defaultProps = {
-  variant: 'filled',
-  colorScheme: 'primary',
-  size: 'large',
-};
 
 export const Button = forwardRef<
   HTMLButtonElement,
@@ -118,16 +119,34 @@ export const Button = forwardRef<
       ButtonHTMLAttributes<HTMLButtonElement>,
       HTMLButtonElement
     >
->((props, ref) => {
-  const { topAddon, leftAddon, rightAddon, children } = props;
-  return (
-    <StyledButton ref={ref} {...props}>
+>(
+  (
+    {
+      topAddon,
+      leftAddon,
+      rightAddon,
+      children,
+      variant,
+      colorScheme,
+      size,
+      ...rest
+    },
+    ref
+  ) => (
+    <StyledButton
+      ref={ref}
+      topAddon={topAddon}
+      variant={variant}
+      colorScheme={colorScheme}
+      size={size}
+      {...rest}
+    >
       {topAddon && topAddon}
       {leftAddon && leftAddon}
       {children}
       {rightAddon && rightAddon}
     </StyledButton>
-  );
-});
+  )
+);
 
 Button.displayName = 'Button';
