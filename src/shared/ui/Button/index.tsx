@@ -135,6 +135,7 @@ export const Button: FC<
           height: 24px;
           border-radius: 4px;
           border: none;
+          gap: 4px;
 
           &:hover {
             background-color: #f0f2f3;
