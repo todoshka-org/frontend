@@ -133,7 +133,8 @@ export const Badge: FC<BadgeProps> = ({
   if (badgeType === 'priority') {
     return (
       <PriorityBadge type={type}>
-        {(type === 'normal' && (extended ? 'Normal' : 'N')) ||
+        {children ||
+          (type === 'normal' && (extended ? 'Normal' : 'N')) ||
           (type === 'minor' && (extended ? 'Minor' : 'M')) ||
           (type === 'major' && (extended ? 'Major' : 'M')) ||
           (type === 'critical' && (extended ? 'Critical' : 'C'))}
@@ -144,7 +145,8 @@ export const Badge: FC<BadgeProps> = ({
   if (badgeType === 'kanban-status') {
     return (
       <KanbanStatusBadge type={type}>
-        {(type === 'new' && 'New') ||
+        {children ||
+          (type === 'new' && 'New') ||
           (type === 'progress' && 'In progress') ||
           (type === 'paused' && 'Paused') ||
           (type === 'done' && 'Done')}
@@ -158,7 +160,8 @@ export const Badge: FC<BadgeProps> = ({
 
   return (
     <StatusBadge type={type}>
-      {(type === 'new' && 'New') ||
+      {children ||
+        (type === 'new' && 'New') ||
         (type === 'progress' && 'In progress') ||
         (type === 'paused' && 'Paused') ||
         (type === 'done' && 'Done')}
