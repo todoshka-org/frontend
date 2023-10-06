@@ -42,5 +42,13 @@ export const defaultTheme: DefaultTheme = {
       90: '#31135E',
       100: '#1C0F30',
     },
+    red: {
+      10: '#FFF1F1',
+      60: '#DA1E28',
+    },
+    green: {
+      10: '#DEFBE6',
+      60: '#198038',
+    },
   },
 };
